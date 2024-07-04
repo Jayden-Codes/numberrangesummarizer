@@ -21,8 +21,11 @@ public class App implements NumberRangeSummarizer
      */
     @Override
     public Collection<Integer> collect(String input) {
-        Collection<Integer> myCollection = new ArrayList<>();
+        if (input == null || input.isEmpty()) {
+            return new ArrayList<>();
+        }
         String [] val = input.split(",");
+        Collection<Integer> myCollection = new ArrayList<>();
         for (String v: val) {
             myCollection.add(Integer.parseInt(v));
         }
