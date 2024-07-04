@@ -5,37 +5,50 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Hello world!
- *
+ * The App class implements the NumberRangeSummarizer interface. It takes a comma-separated
+ * string of numbers as input and returns a string summarizing the numbers with ranges.
  */
 public class App implements NumberRangeSummarizer
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        App nrs = new App();
+        String input = "1,3,6,7,8,12,13,14,15,21,22,23,24,31";
+        Collection<Integer> myCollection = nrs.collect(input);
+        String summary = nrs.summarizeCollection(myCollection);
+        System.out.println(summary);
+
     }
 
     /**
-     * @param input
-     * @return
+     * Collects a comma-separated string of numbers into a collection of integers.
+     * @param input The comma-separated string of numbers.
+     * @return A collection of integers representing the numbers.
      */
     @Override
     public Collection<Integer> collect(String input) {
+
         if (input == null || input.isEmpty()) {
             return new ArrayList<>();
         }
+        input = input.replaceAll(" ", "");
         String [] val = input.split(",");
         Collection<Integer> myCollection = new ArrayList<>();
         for (String v: val) {
-            myCollection.add(Integer.parseInt(v));
+            try {
+                myCollection.add(Integer.parseInt(v));
+            } catch (NumberFormatException e){
+                throw new NumberFormatException("Invalid input: " + e.getMessage());
+            }
         }
 
         return myCollection;
     }
 
     /**
-     * @param input
-     * @return
+     * Summarizes a collection of integers into a string with ranges for consecutive numbers.
+     * @param input The collection of integers to summarize.
+     * @return A string summarizing the numbers with ranges.
      */
     @Override
     public String summarizeCollection(Collection<Integer> input) {
